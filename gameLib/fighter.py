@@ -83,7 +83,11 @@ class Fighter:
                 return True
             else:
                 # 点击指定位置并等待下一轮
-                self.yys.mouse_click_bg(pos, pos_end)
+
+                if random.randint(0, 1) > 0:
+                    self.yys.mouse_click_bg(pos, pos_end)
+                else:
+                    self.yys.mouse_double_click_bg(pos, pos_end)
                 self.log.writeinfo(self.name + '点击 ' + tag)
             step_time1 = random.randint(0, 1500)
             step_time2 = random.randint(0, 1500)

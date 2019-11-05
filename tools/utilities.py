@@ -8,7 +8,7 @@ log = WriteLog()
 
 class Mood:
     '''
-    用于模拟随机的点击频率，每5分钟更换一次点击规律\n
+    用于模拟随机的点击频率，每3分钟更换一次点击规律\n
     energetic: 状态极佳，点击延迟在1-1.5s\n
     joyful: 状态不错，点击延迟在1.3-2.1s\n
     normal: 状态一般，点击延迟在1.8-3s\n
@@ -30,7 +30,7 @@ class Mood:
         self.lastmood = Mood.mymood[a]
 
     def getmood(self):
-        if (time.time() - self.lastime >= 300):
+        if (time.time() - self.lastime >= 180):
             self.lastime = time.time()
             a = random.randint(1, self.state)
             self.lastmood = Mood.mymood[a]

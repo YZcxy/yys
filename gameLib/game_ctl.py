@@ -296,6 +296,35 @@ class GameControl():
             win32gui.SendMessage(self.hwnd, win32con.WM_LBUTTONUP,
                                  0, win32api.MAKELONG(pos_rand[0], pos_rand[1]))
 
+    def mouse_double_click_bg(self, pos, pos_end=None):
+        """
+        后台鼠标双击
+            :param pos: (x,y) 鼠标双击的坐标
+            :param pos_end=None: (x,y) 若pos_end不为空，则鼠标双击以pos为左上角坐标pos_end为右下角坐标的区域内的随机位置
+        """
+
+        for i in range(2):
+            if pos_end == None:
+                win32gui.SendMessage(
+                    self.hwnd, win32con.WM_MOUSEMOVE, 0, win32api.MAKELONG(pos[0], pos[1]))
+                win32gui.SendMessage(
+                    self.hwnd, win32con.WM_LBUTTONDOWN, 0, win32api.MAKELONG(pos[0], pos[1]))
+                time.sleep(random.randint(20, 80)/1000)
+                win32gui.SendMessage(
+                    self.hwnd, win32con.WM_LBUTTONUP, 0, win32api.MAKELONG(pos[0], pos[1]))
+            else:
+                pos_rand = (random.randint(
+                    pos[0], pos_end[0]), random.randint(pos[1], pos_end[1]))
+                win32gui.SendMessage(self.hwnd, win32con.WM_MOUSEMOVE,
+                                     0, win32api.MAKELONG(pos_rand[0], pos_rand[1]))
+                win32gui.SendMessage(self.hwnd, win32con.WM_LBUTTONDOWN, 0, win32api.MAKELONG(
+                    pos_rand[0], pos_rand[1]))
+                time.sleep(random.randint(20, 80)/1000)
+                win32gui.SendMessage(self.hwnd, win32con.WM_LBUTTONUP,
+                                     0, win32api.MAKELONG(pos_rand[0], pos_rand[1]))
+
+            time.sleep(random.randint(100, 200) / 1000)
+
     def mouse_drag_bg(self, pos1, pos2):
         """
         后台鼠标拖拽

@@ -23,10 +23,22 @@ class ExploreFight(Fighter):
 
     def next_scene(self):
         '''
-        移动至下一个场景，每次移动400像素
+        移动至下一个场景，每次移动(300-500)像素
         '''
         x0 = random.randint(510, 1126)
-        x1 = x0 - 500
+        move = random.randint(300, 500)
+        x1 = x0 - move
+        y0 = random.randint(110, 210)
+        y1 = random.randint(110, 210)
+        self.yys.mouse_drag_bg((x0, y0), (x1, y1))
+
+    def last_scene(self):
+        '''
+        移动至上一个场景，每次移动(200-300)像素
+        '''
+        x0 = random.randint(510, 1126)
+        move = random.randint(200, 300)
+        x1 = x0 + move
         y0 = random.randint(110, 210)
         y1 = random.randint(110, 210)
         self.yys.mouse_drag_bg((x0, y0), (x1, y1))
@@ -122,6 +134,19 @@ class ExploreFight(Fighter):
         fight_pos = ((find_pos[0]+2), (find_pos[1]+205))
         return fight_pos
 
+    def disturb_action(self):
+        # 随机干扰次数
+        num = random.randint(0,2)
+        for i in range(num):
+            time.sleep(random.randint(1, 3))
+            self.log.writeinfo('干扰行动')
+            # 随机干扰类型
+            if random.randint(0,1) == 0:
+                self.next_scene()
+            else:
+                self.last_scene()
+
+
     def fight_moster(self, mood1, mood2):
         '''
         打经验怪
@@ -152,7 +177,7 @@ class ExploreFight(Fighter):
             # if not self.yys.wait_game_img('img\\ZHUN-BEI.png', self.zhunbei_delay, False):
             #     break
             self.log.writeinfo('已进入战斗')
-            time.sleep(1)
+            time.sleep(2)
 
             # 等待式神准备
             # self.yys.wait_game_color(((1024,524),(1044, 544)), (138,198,233), 30)
@@ -165,12 +190,18 @@ class ExploreFight(Fighter):
             # self.click_until('准备按钮', 'img\\ZI-DONG.png', *
             #                  TansuoPos.ready_btn, mood1.get1mood()/1000)
 
+            #战斗结束之前一点干扰动作
+            self.disturb_action()
+
             # 检查是否打完
             self.check_end()
             mood2.moodsleep()
 
-            # 在战斗结算页面
-            self.yys.mouse_click_bg(ut.firstposition())
+            # 在战斗结算页面,随机单机或者双击
+            if random.randint(0,1) == 0:
+                self.yys.mouse_click_bg(ut.firstposition())
+            else:
+                self.yys.mouse_double_click_bg(ut.firstposition())
             self.click_until('结算', 'img/JIESUAN.png',
                              *CommonPos.second_position, mood2.get1mood()/1000)
 
@@ -188,14 +219,19 @@ class ExploreFight(Fighter):
             # 进入探索内
             self.switch_to_scene(4)
 
-            # 开始打怪
+            # 开始打怪，随机一次回拉
+            back = random.randint(1,5)
             i = 0
-            while i < 4 and self.run:
+            while i < 6 and self.run:
                 result = self.fight_moster(mood1, mood2)
                 if result == 1:
                     continue
                 elif result == 2:
                     break
+                elif i == back:
+                    self.log.writeinfo('回拉一次')
+                    self.last_scene()
+                    i += 1
                 else:
                     self.log.writeinfo('移动至下一个场景')
                     self.next_scene()
