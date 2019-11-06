@@ -174,24 +174,24 @@ class ExploreFight(Fighter):
 
             # 攻击怪
             self.yys.mouse_click_bg(fight_pos)
-            # if not self.yys.wait_game_img('img\\ZHUN-BEI.png', self.zhunbei_delay, False):
-            #     break
+            if not self.yys.wait_game_img('img\\ZHUN-BEI.png', self.zhunbei_delay, False):
+                break
             self.log.writeinfo('已进入战斗')
-            time.sleep(2)
+            time.sleep(1)
 
             # 等待式神准备
-            # self.yys.wait_game_color(((1024,524),(1044, 544)), (138,198,233), 30)
-            # logging.info('式神准备完成')
+            self.yys.wait_game_color(((1024,524),(1044, 544)), (138,198,233), 30)
+            logging.info('式神准备完成')
 
             # 检查狗粮经验
-            # self.check_exp_full()
+            self.check_exp_full()
 
             # 点击准备，直到进入战斗
-            # self.click_until('准备按钮', 'img\\ZI-DONG.png', *
-            #                  TansuoPos.ready_btn, mood1.get1mood()/1000)
+            self.click_until('准备按钮', 'img\\ZI-DONG.png', *
+                             TansuoPos.ready_btn, mood1.get1mood()/1000)
 
             #战斗结束之前一点干扰动作
-            self.disturb_action()
+            # self.disturb_action()
 
             # 检查是否打完
             self.check_end()
@@ -202,7 +202,7 @@ class ExploreFight(Fighter):
                 self.yys.mouse_click_bg(ut.firstposition())
             else:
                 self.yys.mouse_double_click_bg(ut.firstposition())
-            self.click_until('结算', 'img/JIESUAN.png',
+            self.click_until('结算', 'img/YING-BING.png',
                              *CommonPos.second_position, mood2.get1mood()/1000)
 
             # 返回结果
@@ -240,4 +240,4 @@ class ExploreFight(Fighter):
             # 退出探索
             self.switch_to_scene(3)
             self.log.writeinfo('结束本轮探索')
-            time.sleep(0.5)
+            time.sleep(random.randint(500,1500)/1000)

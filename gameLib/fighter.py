@@ -7,6 +7,7 @@ import logging
 import random
 import time
 import win32gui
+import sys
 
 
 class Fighter:
@@ -61,7 +62,7 @@ class Fighter:
         # 点击怪物
         pass
 
-    def click_until(self, tag, img_path, pos, pos_end=None, step_time=1, appear=True):
+    def click_until(self, tag, img_path, pos, pos_end=None, step_time=None, appear=True):
         '''
         在某一时间段内，后台点击鼠标，直到出现某一图片出现或消失
             :param tag: 按键名
@@ -89,15 +90,18 @@ class Fighter:
                 else:
                     self.yys.mouse_double_click_bg(pos, pos_end)
                 self.log.writeinfo(self.name + '点击 ' + tag)
-            step_time1 = random.randint(0, 1500)
-            step_time2 = random.randint(0, 1500)
-            time.sleep((step_time1+step_time2)/1000)
+            if step_time == None:
+                time.sleep(random.randint(1, 3))
+            else:
+                time.sleep(step_time)
         self.log.writewarning(self.name + '点击 ' + tag + ' 失败!')
 
         # 提醒玩家点击失败，并在5s后退出
         self.yys.activate_window()
         time.sleep(5)
-        self.yys.quit_game()
+        # self.yys.quit_game()
+        self.log.writewarning("强制退出脚本")
+        sys.exit(0)
 
     def activate(self):
         self.log.writewarning(self.name + '启动脚本')
@@ -160,7 +164,7 @@ class Fighter:
 
                 # 点击探索灯笼进入探索界面
                 self.click_until('探索灯笼', 'img/JUE-XING.png', *
-                                 TansuoPos.tansuo_denglong, 2)
+                                 TansuoPos.tansuo_denglong)
 
                 # 递归
                 self.switch_to_scene(scene)
@@ -170,7 +174,7 @@ class Fighter:
             if scene == 3 or scene == 4:
                 # 点击最后章节
                 self.click_until('最后章节', 'img/TAN-SUO.png',
-                                 *TansuoPos.last_chapter, 2)
+                                 *TansuoPos.last_chapter)
 
                 # 递归
                 self.switch_to_scene(scene)
@@ -180,7 +184,7 @@ class Fighter:
             if scene == 4:
                 # 点击探索按钮
                 self.click_until('探索按钮', 'img/YING-BING.png',
-                                 *TansuoPos.tansuo_btn, 2)
+                                 *TansuoPos.tansuo_btn)
 
                 # 递归
                 self.switch_to_scene(scene)
@@ -190,7 +194,7 @@ class Fighter:
             if scene == 3:
                 # 点击退出探索
                 self.click_until('退出按钮', 'img\\QUE-REN.png',
-                                 *TansuoPos.quit_btn, 2)
+                                 *TansuoPos.quit_btn)
 
                 # 点击确认
                 self.click_until('确认按钮', 'img\\QUE-REN.png',

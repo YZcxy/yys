@@ -9,6 +9,7 @@ import win32con
 import win32gui
 import win32ui
 from PIL import Image
+import sys
 
 
 class GameControl():
@@ -364,7 +365,9 @@ class GameControl():
                 time.sleep(0.1)
         if quit:
             # 超时则退出游戏
-            self.quit_game()
+            # self.quit_game()
+            self.log.writewarning("强制退出脚本")
+            sys.exit(0)
         else:
             return False
 
@@ -387,7 +390,9 @@ class GameControl():
             time.sleep(1)
         if quit:
             # 超时则退出游戏
-            self.quit_game()
+            # self.quit_game()
+            self.log.writewarning("强制退出脚本")
+            sys.exit(0)
         else:
             return False
 
