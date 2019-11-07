@@ -53,9 +53,9 @@ def firstposition():
     h = 640
     while True:
         position = (random.randint(0, w), random.randint(50, h))
-        if position[0] < 332 or position[0] > 931:
+        if position[0] < 320 or position[0] > 930:
             return position
-        elif position[1] < 350 or position[1] > 462:
+        elif position[1] < 320 or position[1] > 480:
             return position
 
 

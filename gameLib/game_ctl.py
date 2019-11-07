@@ -9,7 +9,7 @@ import win32con
 import win32gui
 import win32ui
 from PIL import Image
-import sys
+from tools.logsystem import WriteLog
 
 
 class GameControl():
@@ -24,6 +24,9 @@ class GameControl():
         self.quit_game_enable = quit_game_enable
         #user32 = ctypes.windll.user32
         #user32.SetProcessDPIAware()
+
+        # 启动日志
+        self.log = WriteLog()
 
     def window_full_shot(self, file_name=None, gray=0):
         """
