@@ -23,7 +23,14 @@ class TansuoPos():
     gouliang_middle = (397, 218), (500, 349)  # 中间狗粮位置
     gouliang_right = (628, 293), (730, 430)  # 右边狗粮位置
 
-
 class YuhunPos():
     tiaozhan_btn = (790, 418), (903, 469)    # 御魂挑战按钮
     kaishizhandou_btn = (1048, 535), (1113, 604)   # 御魂开始战斗按钮
+
+class GhostPos():
+    jinru_btn = (770, 450), (875, 485)   # 进入百鬼夜行按钮
+    king_position = (((200, 330),(280, 470)),((530, 330),(610, 470)),((820, 330),(900, 470)))   # 三组鬼王的位置
+    start_btn = (1000, 500), (1090, 590)  # 开始砸百鬼按钮
+    ghost_position = (70, 300), (1050, 480)  # 百鬼的大致位置
+    jiesuan_position = (60, 80),(150, 550)  # 百鬼契约书位置
+    beans_position = (340, 590) # 百鬼初始豆子中心位置

@@ -58,6 +58,12 @@ class Fighter:
         self.yys.wait_game_img('img\\JIE-SU.png', self.max_win_time)
         self.log.writeinfo(self.name + "战斗结束")
 
+    def check_ghost(self):
+        # 检测是否在百鬼页面
+        self.log.writeinfo(self.name + '检测是否在百鬼页面')
+        self.yys.wait_game_img('img\\BAI-GUI-YE-XING.png', self.max_win_time)
+        self.log.writeinfo(self.name + "页面正确，进入下一步")
+
     def click_monster(self):
         # 点击怪物
         pass
@@ -84,11 +90,7 @@ class Fighter:
                 return True
             else:
                 # 点击指定位置并等待下一轮
-
-                if random.randint(0, 1) > 0:
-                    self.yys.mouse_click_bg(pos, pos_end)
-                else:
-                    self.yys.mouse_double_click_bg(pos, pos_end)
+                self.yys.mouse_click_bg(pos, pos_end)
                 self.log.writeinfo(self.name + '点击 ' + tag)
             if step_time == None:
                 time.sleep(random.randint(1, 3))
@@ -136,6 +138,25 @@ class Fighter:
         # 分别识别庭院、探索、章节页、探索内
         maxVal, maxLoc = self.yys.find_multi_img(
             'img/JIA-CHENG.png', 'img/JUE-XING.png', 'img/TAN-SUO.png', 'img/YING-BING.png')
+
+        scene_cof = max(maxVal)
+        if scene_cof > 0.97:
+            scene = maxVal.index(scene_cof)
+            return scene + 1
+        else:
+            return 0
+
+    def get_scene_baigui(self):
+        '''
+        识别百鬼结束的画面
+            :return: 返回场景名称：1-百鬼首页，2-结算页面
+        '''
+        # 拒绝悬赏
+        self.yys.rejectbounty()
+
+        # 分别识别百鬼首页、结算页面
+        maxVal, maxLoc = self.yys.find_multi_img(
+            'img/BAI-GUI-YE-XING.png', 'img/BAI-GUI-QI-YUE-SHU.png')
 
         scene_cof = max(maxVal)
         if scene_cof > 0.97:

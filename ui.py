@@ -1,4 +1,5 @@
 from explore.explore import ExploreFight
+from ghost.ghost import Ghost
 from mitama.dual import DualFighter
 from mitama.fighter_driver import DriverFighter
 from mitama.fighter_passenger import FighterPassenger
@@ -67,6 +68,10 @@ class MyMainWindow(QMainWindow):
                      str(self.ui.horizontalSlider.value()))
             conf.set('explore', 'zhunbei_delay',
                      str(self.ui.lineEdit_3.text()))
+
+        # 百鬼夜行参数
+        if section == 2:
+            pass
     
     def get_conf(self, section):
         conf = configparser.ConfigParser()
@@ -112,6 +117,10 @@ class MyMainWindow(QMainWindow):
         elif section == 1:
             # 探索
             self.fight = ExploreFight()
+
+        elif section == 2:
+            # 百鬼夜行
+            self.fight = Ghost()
 
         task = threading.Thread(target = self.fight.start)
         task.start()

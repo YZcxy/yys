@@ -9,9 +9,13 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_MainWindow(object):
+    '''
+    需要注意各种属性的序号，这里完全没有按顺序写
+    '''
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(545, 590)
+        MainWindow.resize(555, 590)
         MainWindow.setMinimumSize(QtCore.QSize(545, 590))
         MainWindow.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -66,6 +70,8 @@ class Ui_MainWindow(object):
         self.tabWidget.setMinimumSize(QtCore.QSize(0, 0))
         self.tabWidget.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.tabWidget.setObjectName("tabWidget")
+
+        # 御魂/御灵页面
         self.tab = QtWidgets.QWidget()
         self.tab.setObjectName("tab")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.tab)
@@ -90,6 +96,8 @@ class Ui_MainWindow(object):
         self.gridLayout.addWidget(self.mitama_dual, 1, 0, 1, 1)
         self.gridLayout_2.addWidget(self.groupBox, 0, 0, 1, 1)
         self.tabWidget.addTab(self.tab, "")
+
+        # 探索页面
         self.tab_2 = QtWidgets.QWidget()
         self.tab_2.setObjectName("tab_2")
         self.gridLayout_5 = QtWidgets.QGridLayout(self.tab_2)
@@ -130,16 +138,31 @@ class Ui_MainWindow(object):
         self.line_4.setObjectName("line_4")
         self.gridLayout_5.addWidget(self.line_4, 2, 0, 1, 1)
         self.tabWidget.addTab(self.tab_2, "")
+
+        # 百鬼夜行页面
         self.tab_3 = QtWidgets.QWidget()
         self.tab_3.setObjectName("tab_3")
         self.gridLayout_4 = QtWidgets.QGridLayout(self.tab_3)
         self.gridLayout_4.setObjectName("gridLayout_4")
-        self.plainTextEdit = QtWidgets.QPlainTextEdit(self.tab_3)
+        self.plainTextEdit_3 = QtWidgets.QPlainTextEdit(self.tab_3)
+        self.plainTextEdit_3.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        self.plainTextEdit_3.setReadOnly(True)
+        self.plainTextEdit_3.setObjectName("plainTextEdit_3")
+        self.gridLayout_4.addWidget(self.plainTextEdit_3, 0, 0, 1, 1)
+        self.tabWidget.addTab(self.tab_3, "")
+
+        # 关于页面
+        self.tab_4 = QtWidgets.QWidget()
+        self.tab_4.setObjectName("tab_4")
+        self.gridLayout_9 = QtWidgets.QGridLayout(self.tab_4)
+        self.gridLayout_9.setObjectName("gridLayout_9")
+        self.plainTextEdit = QtWidgets.QPlainTextEdit(self.tab_4)
         self.plainTextEdit.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.plainTextEdit.setReadOnly(True)
         self.plainTextEdit.setObjectName("plainTextEdit")
-        self.gridLayout_4.addWidget(self.plainTextEdit, 0, 0, 1, 1)
-        self.tabWidget.addTab(self.tab_3, "")
+        self.gridLayout_9.addWidget(self.plainTextEdit, 0, 0, 1, 1)
+        self.tabWidget.addTab(self.tab_4, "")
+
         self.verticalLayout.addWidget(self.tabWidget)
         self.line = QtWidgets.QFrame(self.frame)
         self.line.setFrameShape(QtWidgets.QFrame.HLine)
@@ -240,10 +263,12 @@ class Ui_MainWindow(object):
 "\n"
 "最好把“合并相同式神”选项关闭。"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "探索"))
+        self.plainTextEdit_3.setPlainText(_translate("MainWindow", "测试版百鬼，随机乱砸，不能指定式神，在百鬼夜行开始页面启动插件即可"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "百鬼夜行"))
         self.plainTextEdit.setPlainText(_translate("MainWindow", "网址：https://github.com/AcademicDog/onmyoji_bot\n"
 "\n"
 "交流Q群：592055060"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "关于"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("MainWindow", "关于"))
         self.groupBox_2.setTitle(_translate("MainWindow", "高级选项"))
         self.checkBox.setText(_translate("MainWindow", "超时自动关闭阴阳师"))
         self.label_2.setText(_translate("MainWindow", "  画面超时时间(秒)："))
