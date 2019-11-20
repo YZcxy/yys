@@ -71,6 +71,7 @@ class Fighter:
             :param pos_end=None: (x,y) 若pos_end不为空，则鼠标单击以pos为左上角坐标pos_end为右下角坐标的区域内的随机位置
             :step_time=0.5: 查询间隔
             :appear: 图片出现或消失：Ture-出现；False-消失
+            :point: 判定图片的的识别概率
             :return: 成功返回True, 失败退出游戏
         '''
         # 在指定时间内反复监测画面并点击

@@ -454,6 +454,7 @@ class GameControl():
             :param pos1=None: 欲查找范围的左上角坐标
             :param pos2=None: 欲查找范围的右下角坐标
             :param gray=0: 是否查找黑白图片，0：查找彩色图片，1：查找黑白图片
+            :param point: 判定图片的的识别概率
             :return: 查找成功返回位置坐标，否则返回False
         '''
         self.rejectbounty()
