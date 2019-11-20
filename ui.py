@@ -1,5 +1,6 @@
 from explore.explore import ExploreFight
 from ghost.ghost import Ghost
+from breakthrough.breakthrough import Breakthrough
 from mitama.dual import DualFighter
 from mitama.fighter_driver import DriverFighter
 from mitama.fighter_passenger import FighterPassenger
@@ -121,6 +122,10 @@ class MyMainWindow(QMainWindow):
         elif section == 2:
             # 百鬼夜行
             self.fight = Ghost()
+
+        elif section == 3:
+            # 结界突破
+            self.fight = Breakthrough()
 
         task = threading.Thread(target = self.fight.start)
         task.start()

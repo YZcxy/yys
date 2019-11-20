@@ -15,8 +15,8 @@ class Ui_MainWindow(object):
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(555, 590)
-        MainWindow.setMinimumSize(QtCore.QSize(545, 590))
+        MainWindow.resize(700, 590)
+        MainWindow.setMinimumSize(QtCore.QSize(700, 590))
         MainWindow.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -151,6 +151,18 @@ class Ui_MainWindow(object):
         self.gridLayout_4.addWidget(self.plainTextEdit_3, 0, 0, 1, 1)
         self.tabWidget.addTab(self.tab_3, "")
 
+        # 结界突破页面
+        self.tab_5 = QtWidgets.QWidget()
+        self.tab_5.setObjectName("tab_5")
+        self.gridLayout_10 = QtWidgets.QGridLayout(self.tab_5)
+        self.gridLayout_10.setObjectName("gridLayout_10")
+        self.plainTextEdit_4 = QtWidgets.QPlainTextEdit(self.tab_5)
+        self.plainTextEdit_4.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        self.plainTextEdit_4.setReadOnly(True)
+        self.plainTextEdit_4.setObjectName("plainTextEdit_4")
+        self.gridLayout_10.addWidget(self.plainTextEdit_4, 0, 0, 1, 1)
+        self.tabWidget.addTab(self.tab_5, "")
+
         # 关于页面
         self.tab_4 = QtWidgets.QWidget()
         self.tab_4.setObjectName("tab_4")
@@ -263,8 +275,10 @@ class Ui_MainWindow(object):
 "\n"
 "最好把“合并相同式神”选项关闭。"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "探索"))
-        self.plainTextEdit_3.setPlainText(_translate("MainWindow", "测试版百鬼，随机乱砸，不能指定式神，在百鬼夜行开始页面启动插件即可"))
+        self.plainTextEdit_3.setPlainText(_translate("MainWindow", "测试版百鬼，随机乱砸，不能指定式神。\n\n在百鬼夜行开始页面启动插件即可。"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "百鬼夜行"))
+        self.plainTextEdit_4.setPlainText(_translate("MainWindow", "测试版结界突破，从左到右从上到下进行突破，突破成功三次就等待刷新按钮刷新。\n\n突破时间三分钟还没结束战斗会强制停止脚本。"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5), _translate("MainWindow", "结界突破"))
         self.plainTextEdit.setPlainText(_translate("MainWindow", "网址：https://github.com/AcademicDog/onmyoji_bot\n"
 "\n"
 "交流Q群：592055060"))

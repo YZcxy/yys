@@ -200,7 +200,7 @@ class ExploreFight(Fighter):
             # 在战斗结算页面,随机单机或者双击
             self.yys.mouse_click_bg(ut.firstposition())
 
-            self.click_until('结算', 'img/YING-BING.png',
+            self.click_until('结算', 'img\\YING-BING.png',
                              *CommonPos.second_position, mood2.get1mood()/1000)
 
             # 返回结果

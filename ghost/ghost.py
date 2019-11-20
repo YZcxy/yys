@@ -1,5 +1,5 @@
 from gameLib.fighter import Fighter
-from tools.game_pos import CommonPos, GhostPos
+from tools.game_pos import GhostPos
 
 import random
 import time
@@ -19,6 +19,7 @@ class Ghost(Fighter):
         self.click_until('选择鬼王', 'img\\YA.png', *GhostPos.king_position[i])
 
     def fighting(self, mood2):
+        # 开始进行砸百鬼操作
         # 调整豆子到10，快速砸完
         self.set_beans()
 
@@ -64,6 +65,12 @@ class Ghost(Fighter):
         else:
             self.click_until('结算', 'img\\BAI-GUI-YE-XING.png', *GhostPos.jiesuan_position)
             return True
+
+    def check_ghost(self):
+        # 检测是否在百鬼页面
+        self.log.writeinfo(self.name + '检测是否在百鬼页面')
+        self.yys.wait_game_img('img\\BAI-GUI-YE-XING.png', self.max_win_time)
+        self.log.writeinfo(self.name + "页面正确，进入下一步")
 
 
     def start(self):

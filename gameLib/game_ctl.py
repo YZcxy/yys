@@ -365,6 +365,33 @@ class GameControl():
         else:
             return False
 
+    def wait_multi_game_img(self, *img_path, max_time=100, quit=True):
+        """
+        等待游戏图像
+            :param img_path: 图片路径
+            :param max_time=60: 超时时间
+            :param quit=True: 超时后是否退出
+            :return: 成功返回坐标，失败返回False
+        """
+        self.rejectbounty()
+        start_time = time.time()
+        while time.time()-start_time <= max_time and self.run:
+            for item in img_path:
+                maxVal, maxLoc = self.find_img(item)
+                if maxVal > 0.97:
+                    return maxLoc
+            if max_time > 5:
+                time.sleep(1)
+            else:
+                time.sleep(0.1)
+        if quit:
+            # 超时则退出游戏
+            # self.quit_game()
+            self.log.writewarning("强制退出脚本")
+            sys.exit(0)
+        else:
+            return False
+
     def wait_game_color(self, region, color, tolerance=0, max_time=60, quit=True):
         """
         等待游戏颜色
@@ -419,11 +446,11 @@ class GameControl():
             return True
         return False
 
-    def find_game_img(self, img_path, part=0, pos1=None, pos2=None, gray=0):
+    def find_game_img(self, img_path, part=0, pos1=None, pos2=None, gray=0, point=0.97):
         '''
         查找图片
             :param img_path: 查找路径
-            :param part=0: 是否全屏查找，0为否，其他为是
+            :param part=0: 是否全屏查找，1为否，其他为是
             :param pos1=None: 欲查找范围的左上角坐标
             :param pos2=None: 欲查找范围的右下角坐标
             :param gray=0: 是否查找黑白图片，0：查找彩色图片，1：查找黑白图片
@@ -432,7 +459,7 @@ class GameControl():
         self.rejectbounty()
         maxVal, maxLoc = self.find_img(img_path, part, pos1, pos2, gray)
         # print(maxVal)
-        if maxVal > 0.97:
+        if maxVal > point:
             return maxLoc
         else:
             return False

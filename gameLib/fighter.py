@@ -58,17 +58,11 @@ class Fighter:
         self.yys.wait_game_img('img\\JIE-SU.png', self.max_win_time)
         self.log.writeinfo(self.name + "战斗结束")
 
-    def check_ghost(self):
-        # 检测是否在百鬼页面
-        self.log.writeinfo(self.name + '检测是否在百鬼页面')
-        self.yys.wait_game_img('img\\BAI-GUI-YE-XING.png', self.max_win_time)
-        self.log.writeinfo(self.name + "页面正确，进入下一步")
-
     def click_monster(self):
         # 点击怪物
         pass
 
-    def click_until(self, tag, img_path, pos, pos_end=None, step_time=None, appear=True):
+    def click_until(self, tag, img_path, pos, pos_end=None, step_time=None, appear=True, point=0.97):
         '''
         在某一时间段内，后台点击鼠标，直到出现某一图片出现或消失
             :param tag: 按键名
@@ -82,7 +76,7 @@ class Fighter:
         # 在指定时间内反复监测画面并点击
         start_time = time.time()
         while time.time()-start_time <= self.max_op_time and self.run:
-            result = self.yys.find_game_img(img_path)
+            result = self.yys.find_game_img(img_path, point=point)
             if not appear:
                 result = not result
             if result:
@@ -137,7 +131,7 @@ class Fighter:
 
         # 分别识别庭院、探索、章节页、探索内
         maxVal, maxLoc = self.yys.find_multi_img(
-            'img/JIA-CHENG.png', 'img/JUE-XING.png', 'img/TAN-SUO.png', 'img/YING-BING.png')
+            'img\\JIA-CHENG.png', 'img\\JUE-XING.png', 'img\\TAN-SUO.png', 'img\\YING-BING.png')
 
         scene_cof = max(maxVal)
         if scene_cof > 0.97:
@@ -156,7 +150,26 @@ class Fighter:
 
         # 分别识别百鬼首页、结算页面
         maxVal, maxLoc = self.yys.find_multi_img(
-            'img/BAI-GUI-YE-XING.png', 'img/BAI-GUI-QI-YUE-SHU.png')
+            'img\\BAI-GUI-YE-XING.png', 'img\\BAI-GUI-QI-YUE-SHU.png')
+
+        scene_cof = max(maxVal)
+        if scene_cof > 0.97:
+            scene = maxVal.index(scene_cof)
+            return scene + 1
+        else:
+            return 0
+
+    def get_scene_breakthrough(self):
+        '''
+        识别结界突破结果
+            :return: 返回场景名称：1-成功，2-失败
+        '''
+        # 拒绝悬赏
+        self.yys.rejectbounty()
+
+        # 分别识别百鬼首页、结算页面
+        maxVal, maxLoc = self.yys.find_multi_img(
+            'img\\SHENG-LI.png', 'img\\SHI-BAI.png')
 
         scene_cof = max(maxVal)
         if scene_cof > 0.97:
@@ -184,7 +197,7 @@ class Fighter:
                 self.slide_x_scene(800)
 
                 # 点击探索灯笼进入探索界面
-                self.click_until('探索灯笼', 'img/JUE-XING.png', *
+                self.click_until('探索灯笼', 'img\\JUE-XING.png', *
                                  TansuoPos.tansuo_denglong)
 
                 # 递归
@@ -194,7 +207,7 @@ class Fighter:
             # 探索界面
             if scene == 3 or scene == 4:
                 # 点击最后章节
-                self.click_until('最后章节', 'img/TAN-SUO.png',
+                self.click_until('最后章节', 'img\\TAN-SUO.png',
                                  *TansuoPos.last_chapter)
 
                 # 递归
@@ -204,7 +217,7 @@ class Fighter:
             # 章节界面
             if scene == 4:
                 # 点击探索按钮
-                self.click_until('探索按钮', 'img/YING-BING.png',
+                self.click_until('探索按钮', 'img\\YING-BING.png',
                                  *TansuoPos.tansuo_btn)
 
                 # 递归

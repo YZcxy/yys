@@ -33,9 +33,9 @@ class FighterPassenger(Fighter):
 
             # 在战斗结算页面
             self.yys.mouse_click_bg(ut.firstposition())
-            self.click_until('结算1', 'img/JIN-BI.png',
+            self.click_until('结算1', 'img\\JIN-BI.png',
                              *CommonPos.first_position, mood3.get1mood()/1000)
-            self.click_until('结算2', 'img/JIN-BI.png',
+            self.click_until('结算2', 'img\\JIN-BI.png',
                              *CommonPos.second_position, mood3.get1mood()/1000, False)
 
             # 等待下一轮
