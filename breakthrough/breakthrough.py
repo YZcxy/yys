@@ -23,7 +23,7 @@ class Breakthrough(Fighter):
 
     def already_break(self, target_pos):
         # 判断这个目标是否已经被突破
-        return self.yys.find_game_img('img\\PO.png', 1, *target_pos)
+        return self.yys.find_game_img('img\\PO.png', 1, *target_pos, point=0.9)
 
     def check_breakthrough(self):
         # 检测是否在结界突破页面

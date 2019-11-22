@@ -2,6 +2,8 @@ from gameLib.fighter import Fighter
 from tools.game_pos import CommonPos, YuhunPos
 import tools.utilities as ut
 
+import configparser
+
 
 class SingleFight(Fighter):
     '''单人御魂战斗，参数done, emyc'''
@@ -9,6 +11,11 @@ class SingleFight(Fighter):
     def __init__(self, done=1, emyc=0):
         # 初始化
         Fighter.__init__(self, '', emyc)
+
+        # 读取配置文件
+        conf = configparser.ConfigParser()
+        conf.read('conf.ini')
+        self.click_partner_enable = conf.getboolean('mitama', 'click_partner_enable')
 
     def start(self):
         '''单人战斗主循环'''
@@ -28,6 +35,11 @@ class SingleFight(Fighter):
 
             # 在战斗中，自动点怪
             self.click_monster()
+
+            # 已经进入战斗，乘客自动点式神
+            if self.click_partner_enable:
+                self.click_until('标记式神', 'IMG\\GREEN-JIAN-TOU.png',
+                                 *CommonPos.left_partner_position, mood3.get1mood()/1000)
 
             # 检测是否打完
             self.check_end()

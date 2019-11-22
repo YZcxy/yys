@@ -56,7 +56,9 @@ class MyMainWindow(QMainWindow):
 
         # 御魂参数
         if section == 0:
-            pass
+            # 御魂
+            conf.set('mitama', 'click_partner_enable',
+                     str(self.ui.mitama_click_partner.isChecked()))
 
         # 探索参数
         if section == 1:
@@ -85,6 +87,7 @@ class MyMainWindow(QMainWindow):
         except:
             conf.add_section('watchdog')
             conf.add_section('explore')
+            conf.add_section('mitama')
             self.set_conf(conf, section)
 
         # 保存配置文件

@@ -4,6 +4,7 @@ import tools.utilities as ut
 
 import logging
 import time
+import configparser
 
 
 class DriverFighter(Fighter):
@@ -12,6 +13,11 @@ class DriverFighter(Fighter):
     def __init__(self, emyc=0, hwnd=0):
         # 初始化
         Fighter.__init__(self, 'Driver: ', emyc, hwnd)
+
+        # 读取配置文件
+        conf = configparser.ConfigParser()
+        conf.read('conf.ini')
+        self.click_partner_enable = conf.getboolean('mitama', 'click_partner_enable')
 
     def start(self):
         '''单人御魂司机'''
@@ -34,15 +40,20 @@ class DriverFighter(Fighter):
             # 已经进入战斗，司机自动点怪
             self.click_monster()
 
+            # 已经进入战斗，乘客自动点式神
+            if self.click_partner_enable:
+                self.click_until('标记式神', 'IMG\\GREEN-JIAN-TOU.png',
+                                 *CommonPos.left_partner_position, mood3.get1mood()/1000)
+
             # 检测是否打完
             self.check_end()
             mood2.moodsleep()
 
             # 在战斗结算页面
             self.yys.mouse_click_bg(ut.firstposition())
-            self.click_until('结算', 'img\\JIN-BI.png',
+            self.click_until('结算1', 'img\\JIN-BI.png',
                              *CommonPos.second_position, mood3.get1mood()/1000)
-            self.click_until('结算', 'img\\JIN-BI.png',
+            self.click_until('结算2', 'img\\JIN-BI.png',
                              *CommonPos.second_position, mood3.get1mood()/1000, False)
 
             # 等待下一轮

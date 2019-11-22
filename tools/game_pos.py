@@ -6,6 +6,7 @@ class GamePos():
 class CommonPos():
     first_position = (30, 80),(200, 452)
     second_position = (940, 80), (1111, 452)  # 第二次结算所点击的位置
+    left_partner_position = (90, 393), (208, 517) # 最左边的式神位置
 
 class TansuoPos():
     last_chapter = (934, 493), (1108, 572)  # 列表最后一章

@@ -4,6 +4,7 @@ import tools.utilities as ut
 
 import logging
 import time
+import configparser
 
 
 class FighterPassenger(Fighter):
@@ -12,6 +13,11 @@ class FighterPassenger(Fighter):
     def __init__(self, emyc=0, hwnd=0):
         # 初始化
         Fighter.__init__(self, 'Passenger: ', emyc, hwnd)
+
+        # 读取配置文件
+        conf = configparser.ConfigParser()
+        conf.read('conf.ini')
+        self.click_partner_enable = conf.getboolean('mitama', 'click_partner_enable')
 
     def start(self):
         '''单人御魂乘客'''
@@ -26,6 +32,11 @@ class FighterPassenger(Fighter):
 
             # 已经进入战斗，乘客自动点怪
             self.click_monster()
+
+            # 已经进入战斗，乘客自动点式神
+            if self.click_partner_enable:
+                self.click_until('标记式神', 'IMG\\GREEN-JIAN-TOU.png',
+                                 *CommonPos.left_partner_position, mood3.get1mood()/1000)
 
             # 检测是否打完
             self.check_end()
