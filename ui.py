@@ -1,6 +1,7 @@
 from explore.explore import ExploreFight
 from ghost.ghost import Ghost
 from breakthrough.breakthrough import Breakthrough
+from breakthrough.shack_breakthrough import ShackBreakthrough
 from mitama.dual import DualFighter
 from mitama.fighter_driver import DriverFighter
 from mitama.fighter_passenger import FighterPassenger
@@ -110,11 +111,11 @@ class MyMainWindow(QMainWindow):
                 # 司机
                 self.fight = DriverFighter()
     
-            if self.ui.mitama_passenger.isChecked():
+            elif self.ui.mitama_passenger.isChecked():
                 # 乘客
                 self.fight = FighterPassenger()
 
-            if self.ui.mitama_dual.isChecked():
+            elif self.ui.mitama_dual.isChecked():
                 # 双开
                 self.fight = DualFighter()
         
@@ -128,7 +129,13 @@ class MyMainWindow(QMainWindow):
 
         elif section == 3:
             # 结界突破
-            self.fight = Breakthrough()
+            if self.ui.individual.isChecked():
+                # 个人突破
+                self.fight = Breakthrough()
+
+            elif self.ui.shack.isChecked():
+                # 个人突破
+                self.fight = ShackBreakthrough()
 
         task = threading.Thread(target = self.fight.start)
         task.start()

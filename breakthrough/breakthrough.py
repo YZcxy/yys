@@ -23,7 +23,7 @@ class Breakthrough(Fighter):
 
     def already_break(self, target_pos):
         # 判断这个目标是否已经被突破
-        return self.yys.find_game_img('img\\PO.png', 1, *target_pos, point=0.9)
+        return self.yys.find_game_img('img\\PO.png', 1, *target_pos, point=0.8)
 
     def check_breakthrough(self):
         # 检测是否在结界突破页面
@@ -32,6 +32,10 @@ class Breakthrough(Fighter):
         self.log.writeinfo(self.name + "页面正确，进入下一步")
 
     def check_result(self):
+        '''
+        检测突破结果
+        :return: 0-异常 1-成功，2-失败
+        '''
         # 等待突破结束
         self.log.writeinfo('等待突破结束')
         self.yys.wait_multi_game_img('img\\SHENG-LI.png', 'img\\SHI-BAI.png', max_time=180)
@@ -52,11 +56,11 @@ class Breakthrough(Fighter):
                          *BreakthroughPos.confirm_btn, 2, False)
 
 
-    def fighting(self, target_pos, mood2):
+    def fighting(self, target_pos, mood):
         '''
         进行指定目标突破
         :param target_pos: 突破指定目标
-        :param mood2: 点击频率
+        :param mood: 点击频率
         :return: 成功执行返回1-成功，2-失败，发生异常返回False
         '''
 
@@ -68,12 +72,12 @@ class Breakthrough(Fighter):
         time.sleep(1)
 
         # 点击有效位置，直到可以进攻按钮
-        self.click_until('突破目标', 'img\\JIN-GONG.png', *self.valid_position(target_pos), step_time= mood2.get1mood()/1000, appear=True, point=0.9)
+        self.click_until('突破目标', 'img\\JIN-GONG.png', *self.valid_position(target_pos), step_time= mood.get1mood()/1000, appear=True, point=0.9)
 
         time.sleep(2)
 
         # 点击进攻，开始突破
-        self.click_until('进攻', 'img\\JIN-GONG.png', *self.attack_position(target_pos), step_time= mood2.get1mood()/1000, appear=False, point=0.9)
+        self.click_until('进攻', 'img\\JIN-GONG.png', *self.attack_position(target_pos), step_time= mood.get1mood()/1000, appear=False, point=0.9)
 
         # 检测是否进入战斗
         self.check_battle()
@@ -84,7 +88,7 @@ class Breakthrough(Fighter):
             return False
 
         # 点击知道结算成功
-        self.click_until('结算', 'img\\JIE-JIE-TU-PO.png', *BreakthroughPos.jiesuan_position, mood2.get1mood() / 1000)
+        self.click_until('结算', 'img\\JIE-JIE-TU-PO.png', *BreakthroughPos.jiesuan_position, mood.get1mood() / 1000)
 
         return result
 

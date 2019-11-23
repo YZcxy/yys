@@ -159,11 +159,23 @@ class Ui_MainWindow(object):
         self.tab_5.setObjectName("tab_5")
         self.gridLayout_10 = QtWidgets.QGridLayout(self.tab_5)
         self.gridLayout_10.setObjectName("gridLayout_10")
+        self.groupBox_4 = QtWidgets.QGroupBox(self.tab_5)
+        self.groupBox_4.setObjectName("groupBox_4")
         self.plainTextEdit_4 = QtWidgets.QPlainTextEdit(self.tab_5)
         self.plainTextEdit_4.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.plainTextEdit_4.setReadOnly(True)
         self.plainTextEdit_4.setObjectName("plainTextEdit_4")
-        self.gridLayout_10.addWidget(self.plainTextEdit_4, 0, 0, 1, 1)
+        self.gridLayout_11 = QtWidgets.QGridLayout(self.groupBox_4)
+        self.gridLayout_11.setObjectName("gridLayout_11")
+        self.gridLayout_11.addWidget(self.plainTextEdit_4, 1, 0, 1, 2)
+        self.individual = QtWidgets.QRadioButton(self.groupBox_4)
+        self.individual.setChecked(True)
+        self.individual.setObjectName("individual")
+        self.gridLayout_11.addWidget(self.individual, 0, 0, 1, 1)
+        self.shack = QtWidgets.QRadioButton(self.groupBox_4)
+        self.shack.setObjectName("shack")
+        self.gridLayout_11.addWidget(self.shack, 0, 1, 1, 1)
+        self.gridLayout_10.addWidget(self.groupBox_4, 0, 0, 1, 1)
         self.tabWidget.addTab(self.tab_5, "")
 
         # 关于页面
@@ -261,6 +273,8 @@ class Ui_MainWindow(object):
         self.start_btn.setText(_translate("MainWindow", "开始"))
         self.pushButton.setText(_translate("MainWindow", "结束"))
         self.label.setText(_translate("MainWindow", "辅助助手"))
+
+        # 御魂
         self.groupBox.setTitle(_translate("MainWindow", "模式"))
         self.mitama_passenger.setText(_translate("MainWindow", "单人乘客"))
         self.mitama_driver.setText(_translate("MainWindow", "单人司机"))
@@ -268,25 +282,45 @@ class Ui_MainWindow(object):
         self.mitama_dual.setText(_translate("MainWindow", "双开"))
         self.mitama_click_partner.setText(_translate("MainWindow", "是否开启自动点选式神，乘客或者司机一人勾选即可。\n (需要点击的式神放置在最左边)"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "御魂/御灵"))
+
+        # 探索
         self.groupBox_3.setTitle(_translate("MainWindow", "延迟设置"))
         self.lineEdit_3.setText(_translate("MainWindow", "3"))
         self.label_5.setText(_translate("MainWindow", "满级狗粮识别延迟(秒)："))
         self.checkBox_3.setText(_translate("MainWindow", "换狗粮拖放式神进度条，进度："))
         self.checkBox_2.setText(_translate("MainWindow", "结束后打BOSS"))
         self.plainTextEdit_2.setPlainText(_translate("MainWindow", "把狗粮队长放在最左边，点开需要打的章节，然后开始。\n"
-"\n"
-"支持自动换狗粮，只打经验怪。\n"
-"\n"
-"最好把“合并相同式神”选项关闭。"))
+                                                                    "\n"
+                                                                    "支持自动换狗粮，只打经验怪。\n"
+                                                                    "\n"
+                                                                    "最好把“合并相同式神”选项关闭。"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "探索"))
+
+        # 百鬼夜行
         self.plainTextEdit_3.setPlainText(_translate("MainWindow", "测试版百鬼，随机乱砸，不能指定式神。\n\n在百鬼夜行开始页面启动插件即可。"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "百鬼夜行"))
-        self.plainTextEdit_4.setPlainText(_translate("MainWindow", "测试版结界突破，从左到右从上到下进行突破，突破成功三次就等待刷新按钮刷新。\n\n突破时间三分钟还没结束战斗会强制停止脚本。"))
+
+
+        # 结界突破
+        self.groupBox_4.setTitle(_translate("MainWindow", "模式"))
+        self.individual.setText(_translate("MainWindow", "个人突破"))
+        self.shack.setText(_translate("MainWindow", "寮突破"))
+        self.plainTextEdit_4.setPlainText(_translate("MainWindow", "个人突破，从左到右从上到下进行突破，突破成功三次就等待刷新按钮刷新.\n"
+                                                                   "\n"
+                                                                   "寮突破，从左到右从上到下进行突破，突破四个任务就滑动翻页\n"
+                                                                    "\n"
+                                                                   "突破时间三分钟还没结束战斗会强制停止脚本。\n"
+                                                                   "\n"
+                                                                   "《重点注意》：请保证突破页面和勾选的模式匹配！！！\n"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5), _translate("MainWindow", "结界突破"))
+
+        # 关于
         self.plainTextEdit.setPlainText(_translate("MainWindow", "网址：https://github.com/AcademicDog/onmyoji_bot\n"
-"\n"
-"交流Q群：592055060"))
+                                                                "\n"
+                                                                "交流Q群：592055060"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("MainWindow", "关于"))
+
+
         self.groupBox_2.setTitle(_translate("MainWindow", "高级选项"))
         self.checkBox.setText(_translate("MainWindow", "超时自动关闭阴阳师"))
         self.label_2.setText(_translate("MainWindow", "  画面超时时间(秒)："))
