@@ -9,9 +9,9 @@ import time
 class Breakthrough(Fighter):
     '''结界突破，参数mode, emyc'''
 
-    def __init__(self, emyc=0, hwnd=0, max_victories=30):
+    def __init__(self, emyc=0, hwnd=0, max_victories=30, activate=True):
         # 初始化
-        Fighter.__init__(self, 'Breakthrough: ', emyc, hwnd)
+        Fighter.__init__(self, 'Breakthrough: ', emyc, hwnd, activate)
         self.max_victories = max_victories
 
     def valid_position(self, target_pos):

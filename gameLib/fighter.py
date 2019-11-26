@@ -12,12 +12,13 @@ import sys
 
 class Fighter:
 
-    def __init__(self, name='', emyc=0, hwnd=0):
+    def __init__(self, name='', emyc=0, hwnd=0, activate=True):
         '''
         初始化
             ：param name='': 打手名称
             : param emyc=0: 点怪设置：0-不点怪
             : param hwnd=0: 指定窗口句柄：0-否；其他-窗口句柄
+            : param activate=True: 是否激活窗口，支线任务不需要激活
         '''
         # 初始参数
         self.emyc = emyc
@@ -41,9 +42,10 @@ class Fighter:
         self.log.writeinfo(self.name + '绑定窗口成功')
         self.log.writeinfo(self.name + str(hwnd))
 
-        # 激活窗口
-        self.yys.activate_window()
-        self.log.writeinfo(self.name + '激活窗口成功')
+        if activate:
+            # 激活窗口
+            self.yys.activate_window()
+            self.log.writeinfo(self.name + '激活窗口成功')
         time.sleep(0.5)
 
     def check_battle(self):

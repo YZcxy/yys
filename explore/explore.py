@@ -230,7 +230,7 @@ class ExploreFight(Fighter):
         self.log.writeinfo('执行结界突破任务')
 
         # 执行3次突破任务
-        tupo_fight = Breakthrough(max_victories=3)
+        tupo_fight = Breakthrough(max_victories=3, activate=False)
         tupo_fight.start()
 
     def start(self):
