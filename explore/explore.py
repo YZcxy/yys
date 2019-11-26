@@ -1,5 +1,6 @@
 from gameLib.fighter import Fighter
 from tools.game_pos import CommonPos, TansuoPos
+from breakthrough.breakthrough import Breakthrough
 import tools.utilities as ut
 
 import configparser
@@ -17,6 +18,7 @@ class ExploreFight(Fighter):
         conf = configparser.ConfigParser()
         conf.read('conf.ini')
         self.fight_boss_enable = conf.getboolean('explore', 'fight_boss_enable')
+        self.tupo_enable = conf.getboolean('explore', 'tupo_enable')
         self.slide_shikigami = conf.getboolean('explore', 'slide_shikigami')
         self.slide_shikigami_progress = conf.getint('explore', 'slide_shikigami_progress')
         self.zhunbei_delay = conf.getint('explore', 'zhunbei_delay')
@@ -209,11 +211,36 @@ class ExploreFight(Fighter):
             else:
                 return 1
 
+    def tupo_branch(self):
+        # 如果不允许进行结界突破，跳过
+        if not self.tupo_enable:
+            return
+
+        # 进入章节页面
+        self.switch_to_scene(3)
+
+        # 判断突破门票是否已满
+        tickets = self.yys.find_game_img('img\\TU-PO-30.png', 1, *TansuoPos.tupo_tickets)
+        # 没满不进行突破
+        if not tickets:
+            return
+
+        # 进入结界突破页面
+        self.switch_to_scene(5)
+        self.log.writeinfo('执行结界突破任务')
+
+        # 执行3次突破任务
+        tupo_fight = Breakthrough(max_victories=3)
+        tupo_fight.start()
+
     def start(self):
         '''单人探索主循环'''
         mood1 = ut.Mood(2)
         mood2 = ut.Mood(3)
         while self.run:
+            # 进行结界突破分支任务
+            self.tupo_branch()
+
             # 进入探索内
             self.switch_to_scene(4)
 
@@ -239,3 +266,4 @@ class ExploreFight(Fighter):
             self.switch_to_scene(3)
             self.log.writeinfo('结束本轮探索')
             time.sleep(random.randint(500,1500)/1000)
+

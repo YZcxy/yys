@@ -125,14 +125,14 @@ class Fighter:
     def get_scene(self):
         '''
         识别当前场景
-            :return: 返回场景名称:1-庭院; 2-探索界面; 3-章节界面; 4-探索内
+            :return: 返回场景名称:1-庭院; 2-探索界面; 3-章节界面; 4-探索内; 5-结界突破
         '''
         # 拒绝悬赏
         self.yys.rejectbounty()
 
         # 分别识别庭院、探索、章节页、探索内
         maxVal, maxLoc = self.yys.find_multi_img(
-            'img\\JIA-CHENG.png', 'img\\JUE-XING.png', 'img\\TAN-SUO.png', 'img\\YING-BING.png')
+            'img\\JIA-CHENG.png', 'img\\JUE-XING.png', 'img\\TAN-SUO.png', 'img\\YING-BING.png', 'img\\JIE-JIE-TU-PO.png')
 
         scene_cof = max(maxVal)
         if scene_cof > 0.97:
@@ -182,7 +182,7 @@ class Fighter:
     def switch_to_scene(self, scene):
         '''
         切换场景
-            :param scene: 需要切换到的场景:1-庭院; 2-探索界面; 3-章节界面; 4-探索内
+            :param scene: 需要切换到的场景:1-庭院; 2-探索界面; 3-章节界面; 4-探索内; 5-结界突破
             :return: 切换成功返回True；切换失败直接退出
         '''
         scene_now = self.get_scene()
@@ -191,7 +191,7 @@ class Fighter:
             return True
         if scene_now == 1:
             # 庭院中
-            if scene == 2 or scene == 3 or scene == 4:
+            if scene == 2 or scene == 3 or scene == 4 or scene == 5:
                 # 先将界面划到最右边
                 self.slide_x_scene(800)
                 time.sleep(2)
@@ -214,6 +214,14 @@ class Fighter:
                 # 递归
                 self.switch_to_scene(scene)
 
+            if scene == 5:
+                # 点击结界突破
+                self.click_until('结界突破', 'img\\JIE-JIE-TU-PO.png',
+                                 *TansuoPos.jiejie_tupo)
+
+                # 递归
+                self.switch_to_scene(scene)
+
         if scene_now == 3:
             # 章节界面
             if scene == 4:
@@ -224,9 +232,17 @@ class Fighter:
                 # 递归
                 self.switch_to_scene(scene)
 
+            if scene == 2 or scene == 5:
+                # 点击关闭按钮
+                self.click_until('退出章节', 'img\\JUE-XING.png',
+                                 *TansuoPos.quit_zhangjie_btn)
+
+                # 递归
+                self.switch_to_scene(scene)
+
         if scene_now == 4:
             # 探索内
-            if scene == 3:
+            if scene == 3 or scene == 2 or scene == 5:
                 # 点击退出探索
                 self.click_until('退出按钮', 'img\\QUE-REN.png',
                                  *TansuoPos.quit_btn)
@@ -234,6 +250,16 @@ class Fighter:
                 # 点击确认
                 self.click_until('确认按钮', 'img\\QUE-REN.png',
                                  *TansuoPos.confirm_btn, 2, False)
+
+                # 递归
+                self.switch_to_scene(scene)
+
+        if scene_now == 5:
+            # 结界突破页面
+            if scene == 2 or scene == 3 or scene == 4:
+                # 点击关闭按钮
+                self.click_until('退出突破', 'img\\JUE-XING.png',
+                                 *TansuoPos.quit_tupo_btn)
 
                 # 递归
                 self.switch_to_scene(scene)

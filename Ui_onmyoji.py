@@ -130,6 +130,9 @@ class Ui_MainWindow(object):
         self.checkBox_2 = QtWidgets.QCheckBox(self.tab_2)
         self.checkBox_2.setObjectName("checkBox_2")
         self.gridLayout_5.addWidget(self.checkBox_2, 6, 0, 1, 1)
+        self.checkBox_4 = QtWidgets.QCheckBox(self.tab_2)
+        self.checkBox_4.setObjectName("checkBox_4")
+        self.gridLayout_5.addWidget(self.checkBox_4, 7, 0, 1, 1)
         self.plainTextEdit_2 = QtWidgets.QPlainTextEdit(self.tab_2)
         self.plainTextEdit_2.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.plainTextEdit_2.setReadOnly(True)
@@ -289,6 +292,7 @@ class Ui_MainWindow(object):
         self.label_5.setText(_translate("MainWindow", "满级狗粮识别延迟(秒)："))
         self.checkBox_3.setText(_translate("MainWindow", "换狗粮拖放式神进度条，进度："))
         self.checkBox_2.setText(_translate("MainWindow", "结束后打BOSS"))
+        self.checkBox_4.setText(_translate("MainWindow", "是否自动结界突破（当突破票满30后自动进行3次突破）"))
         self.plainTextEdit_2.setPlainText(_translate("MainWindow", "把狗粮队长放在最左边，点开需要打的章节，然后开始。\n"
                                                                     "\n"
                                                                     "支持自动换狗粮，只打经验怪。\n"

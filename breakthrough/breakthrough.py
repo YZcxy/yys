@@ -9,9 +9,10 @@ import time
 class Breakthrough(Fighter):
     '''结界突破，参数mode, emyc'''
 
-    def __init__(self, emyc=0, hwnd=0):
+    def __init__(self, emyc=0, hwnd=0, max_victories=30):
         # 初始化
         Fighter.__init__(self, 'Breakthrough: ', emyc, hwnd)
+        self.max_victories = max_victories
 
     def valid_position(self, target_pos):
         # 获取突破位置可点击的有效区域
@@ -101,6 +102,7 @@ class Breakthrough(Fighter):
         while self.run:
             # 检测是否在结界突破页面
             self.check_breakthrough()
+
             # 成功突破次数
             victories = 0
             # 循环突破9次，直到满足成功次数或循环结束
@@ -114,10 +116,16 @@ class Breakthrough(Fighter):
                     sys.exit(0)
                 if result == 1:
                     victories += 1
+                    self.max_victories -= 1
                 self.log.writewarning("当前挑战次数->"+str(i+1)+"，当前成功突破次数->"+str(victories))
 
             # 刷新页面
             self.refresh()
+
+            # 最大突破数小于3就不进行下一轮了
+            if self.max_victories < 3:
+                self.log.writewarning("任务结束")
+                break
 
 
 

@@ -66,12 +66,15 @@ class MyMainWindow(QMainWindow):
             # 探索
             conf.set('explore', 'fight_boss_enable',
                      str(self.ui.checkBox_2.isChecked()))
+            conf.set('explore', 'tupo_enable',
+                     str(self.ui.checkBox_4.isChecked()))
             conf.set('explore', 'slide_shikigami',
                      str(self.ui.checkBox_3.isChecked()))
             conf.set('explore', 'slide_shikigami_progress',
                      str(self.ui.horizontalSlider.value()))
             conf.set('explore', 'zhunbei_delay',
                      str(self.ui.lineEdit_3.text()))
+
 
         # 百鬼夜行参数
         if section == 2:
