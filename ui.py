@@ -58,8 +58,10 @@ class MyMainWindow(QMainWindow):
         # 御魂参数
         if section == 0:
             # 御魂
-            conf.set('mitama', 'click_partner_enable',
-                     str(self.ui.mitama_click_partner.isChecked()))
+            conf.set('mitama', 'mitama_click_partner_left',
+                     str(self.ui.mitama_click_partner_left.isChecked()))
+            conf.set('mitama', 'mitama_click_partner_right',
+                     str(self.ui.mitama_click_partner_right.isChecked()))
 
         # 探索参数
         if section == 1:

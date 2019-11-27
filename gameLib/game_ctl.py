@@ -365,6 +365,32 @@ class GameControl():
         else:
             return False
 
+    def wait_game_img_disappear(self, img_path, max_time=100, quit=True):
+        """
+        等待游戏图像消失
+            :param img_path: 图片路径
+            :param max_time=60: 超时时间
+            :param quit=True: 超时后是否退出
+            :return: 成功返回坐标，失败返回False
+        """
+        self.rejectbounty()
+        start_time = time.time()
+        while time.time() - start_time <= max_time and self.run:
+            maxVal, maxLoc = self.find_img(img_path)
+            if maxVal < 0.97:
+                return maxLoc
+            if max_time > 5:
+                time.sleep(1)
+            else:
+                time.sleep(0.1)
+        if quit:
+            # 超时则退出游戏
+            # self.quit_game()
+            self.log.writewarning("强制退出脚本")
+            sys.exit(0)
+        else:
+            return False
+
     def wait_multi_game_img(self, *img_path, max_time=100, quit=True):
         """
         等待游戏图像

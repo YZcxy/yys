@@ -17,7 +17,8 @@ class DriverFighter(Fighter):
         # 读取配置文件
         conf = configparser.ConfigParser()
         conf.read('conf.ini')
-        self.click_partner_enable = conf.getboolean('mitama', 'click_partner_enable')
+        self.mitama_click_partner_left = conf.getboolean('mitama', 'mitama_click_partner_left')
+        self.mitama_click_partner_right = conf.getboolean('mitama', 'mitama_click_partner_right')
 
     def start(self):
         '''单人御魂司机'''
@@ -41,9 +42,12 @@ class DriverFighter(Fighter):
             self.click_monster()
 
             # 已经进入战斗，乘客自动点式神
-            if self.click_partner_enable:
-                self.click_until('标记式神', 'IMG\\GREEN-JIAN-TOU.png',
+            if self.mitama_click_partner_left:
+                self.click_until('标记左边式神', 'IMG\\GREEN-JIAN-TOU.png',
                                  *CommonPos.left_partner_position, mood3.get1mood()/1000)
+            if self.mitama_click_partner_right:
+                self.click_until('标记右边式神', 'IMG\\GREEN-JIAN-TOU.png',
+                                 *CommonPos.right_partner_position, mood3.get1mood()/1000)
 
             # 检测是否打完
             self.check_end()

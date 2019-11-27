@@ -57,7 +57,7 @@ class Fighter:
     def check_end(self):
         # 检测是否打完
         self.log.writeinfo(self.name + '检测是战斗是否结束')
-        self.yys.wait_game_img('img\\JIE-SU.png', self.max_win_time)
+        self.yys.wait_game_img_disappear('img\\ZI-DONG.png', self.max_win_time)
         self.log.writeinfo(self.name + "战斗结束")
 
     def click_monster(self):
