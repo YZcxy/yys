@@ -68,15 +68,15 @@ class ExploreFight(Fighter):
             self.yys.mouse_click_bg(*TansuoPos.change_monster)
             if self.yys.wait_game_img('img\\QUAN-BU.png', 3, False):
                 break
-        time.sleep(1)
+        time.sleep(2)
 
         # 点击“全部”选项
         self.yys.mouse_click_bg(*TansuoPos.quanbu_btn)
-        time.sleep(1)
+        time.sleep(2)
 
         # 点击“N”卡
         self.yys.mouse_click_bg(*TansuoPos.n_tab_btn)
-        time.sleep(1)
+        time.sleep(2)
 
         # 拖放进度条
         if self.slide_shikigami:
@@ -94,10 +94,12 @@ class ExploreFight(Fighter):
 
         # 更换狗粮
         if gouliang1:
+            time.sleep(2)
             self.yys.mouse_drag_bg((309, 520), (554, 315))
         if gouliang2:
-            time.sleep(1)
+            time.sleep(2)
             self.yys.mouse_drag_bg((191, 520), (187, 315))
+        time.sleep(2)
 
     def find_exp_moster(self):
         '''
