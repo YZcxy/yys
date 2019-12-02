@@ -244,19 +244,15 @@ class ExploreFight(Fighter):
             # 进入探索内
             self.switch_to_scene(4)
 
-            # 开始打怪，随机一次回拉
-            back = random.randint(1,5)
+            # 开始打怪
             i = 0
-            while i < 6 and self.run:
+            while i < 4 and self.run:
                 result = self.fight_moster(mood1, mood2)
                 if result == 1:
                     continue
                 elif result == 2:
+                    time.sleep(random.randint(2,3))
                     break
-                elif i == back:
-                    self.log.writeinfo('回拉一次')
-                    self.last_scene()
-                    i += 1
                 else:
                     self.log.writeinfo('移动至下一个场景')
                     self.next_scene()
