@@ -30,7 +30,7 @@ class TansuoPos():
     gouliang_right = (628, 293), (730, 430)  # 右边狗粮位置
 
 class YuhunPos():
-    tiaozhan_btn = (790, 418), (903, 469)    # 御魂挑战按钮
+    tiaozhan_btn = (1000, 540), (1053, 596)    # 御魂挑战按钮
     kaishizhandou_btn = (1048, 535), (1113, 604)   # 御魂开始战斗按钮
 
 class GhostPos():
