@@ -37,7 +37,9 @@ class Fighter:
 
         # 绑定窗口
         if hwnd == 0:
-            hwnd = win32gui.FindWindow(0, u'阴阳师-网易游戏')
+            hwnd = win32gui.FindWindow('Win32Window0', u'阴阳师-网易游戏')
+            # hwnd = win32gui.FindWindow('Qt5QWindowIcon', '夜神模拟器')
+            # hwnd = win32gui.FindWindowEx(hwnd, 0, 'Qt5QWindowIcon', 'ScreenBoardClassWindow')
         self.yys = GameControl(hwnd, quit_game_enable)
         self.log.writeinfo(self.name + '绑定窗口成功')
         self.log.writeinfo(self.name + str(hwnd))
@@ -57,7 +59,7 @@ class Fighter:
     def check_end(self):
         # 检测是否打完
         self.log.writeinfo(self.name + '检测是战斗是否结束')
-        self.yys.wait_game_img_disappear('img\\ZI-DONG.png', self.max_win_time)
+        self.yys.wait_game_img_disappear('img\\XIAO-XI.png', self.max_win_time)
         self.log.writeinfo(self.name + "战斗结束")
 
     def click_monster(self):

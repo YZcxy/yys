@@ -28,8 +28,7 @@ class SingleFight(Fighter):
             self.yys.wait_game_img('img\\TIAO-ZHAN.png',
                                    self.max_win_time)
             mood1.moodsleep()
-            self.yys.mouse_click_bg(*YuhunPos.tiaozhan_btn)
-            self.log.writeinfo('点击 挑战按钮')
+            self.click_until('挑战按钮', 'img\\TIAO-ZHAN.png', *YuhunPos.tiaozhan_btn, appear=False)
 
             # 检测是否进入战斗
             self.check_battle()
