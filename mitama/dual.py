@@ -1,11 +1,11 @@
+import logging
+import threading
+
+import win32gui
+
 from gameLib.game_ctl import GameControl
 from mitama.fighter_driver import DriverFighter
 from mitama.fighter_passenger import FighterPassenger
-from tools.logsystem import WriteLog
-
-import logging
-import threading
-import win32gui
 
 hwndlist = []
 
@@ -40,7 +40,7 @@ class DualFighter():
         for hwnd in hwndlist:
             yys = GameControl(hwnd)
             if yys.find_game_img('img\\KAI-SHI-ZHAN-DOU.png'):
-                self.driver = DriverFighter(hwnd=hwnd)
+                self.driver = DriverFighter(hwnd=hwnd, click_partner=False)
                 hwndlist.remove(hwnd)
                 logging.info('发现司机')
         self.passenger = FighterPassenger(hwnd=hwndlist[0])

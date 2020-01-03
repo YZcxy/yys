@@ -1,18 +1,19 @@
-from gameLib.fighter import Fighter
-from tools.game_pos import CommonPos, YuhunPos
-import tools.utilities as ut
-
+import configparser
 import logging
 import time
-import configparser
+
+import tools.utilities as ut
+from gameLib.fighter import Fighter
+from tools.game_pos import CommonPos, YuhunPos
 
 
 class DriverFighter(Fighter):
     '''御魂战斗司机程序，参数mode, emyc'''
 
-    def __init__(self, emyc=0, hwnd=0):
+    def __init__(self, emyc=0, hwnd=0, click_partner=True):
         # 初始化
         Fighter.__init__(self, 'Driver: ', emyc, hwnd)
+        self.click_partner = click_partner
 
         # 读取配置文件
         conf = configparser.ConfigParser()
@@ -41,13 +42,14 @@ class DriverFighter(Fighter):
             # 已经进入战斗，司机自动点怪
             self.click_monster()
 
-            # 已经进入战斗，乘客自动点式神
-            if self.mitama_click_partner_left:
-                self.click_until('标记左边式神', 'IMG\\GREEN-JIAN-TOU.png',
-                                 *CommonPos.left_partner_position, mood3.get1mood()/1000)
-            if self.mitama_click_partner_right:
-                self.click_until('标记右边式神', 'IMG\\GREEN-JIAN-TOU.png',
-                                 *CommonPos.right_partner_position, mood3.get1mood()/1000)
+            if self.click_partner:
+                # 已经进入战斗，乘客自动点式神
+                if self.mitama_click_partner_left:
+                    self.click_until('标记左边式神', 'IMG\\GREEN-JIAN-TOU.png',
+                                     *CommonPos.left_partner_position, mood3.get1mood() / 1000)
+                if self.mitama_click_partner_right:
+                    self.click_until('标记右边式神', 'IMG\\GREEN-JIAN-TOU.png',
+                                     *CommonPos.right_partner_position, mood3.get1mood() / 1000)
 
             # 检测是否打完
             self.check_end()
@@ -68,6 +70,7 @@ class DriverFighter(Fighter):
                     self.log.writeinfo('Driver: 进入队伍')
                     break
 
+                # todo,这里有点不准，有时间了再改
                 # 点击默认邀请
                 if self.yys.find_game_img('img\\ZI-DONG-YAO-QING.png'):
                     self.yys.mouse_click_bg((497, 319))
