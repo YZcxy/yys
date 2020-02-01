@@ -1,18 +1,18 @@
-from gameLib.fighter import Fighter
-from tools.game_pos import CommonPos, BreakthroughPos
-
-import tools.utilities as ut
 import sys
 import time
+
+import tools.utilities as ut
+from gameLib.fighter import Fighter
+from tools.game_pos import BreakthroughPos
 
 
 class Breakthrough(Fighter):
     '''结界突破，参数mode, emyc'''
 
-    def __init__(self, emyc=0, hwnd=0, max_victories=30, activate=True):
+    def __init__(self, emyc=0, hwnd=0, max_tasks=30, activate=True):
         # 初始化
         Fighter.__init__(self, 'Breakthrough: ', emyc, hwnd, activate)
-        self.max_victories = max_victories
+        self.max_tasks = max_tasks
 
     def valid_position(self, target_pos):
         # 获取突破位置可点击的有效区域
@@ -47,6 +47,8 @@ class Breakthrough(Fighter):
         return result
 
     def refresh(self):
+        if not self.run:
+            return
         # 等待倒计时刷新按钮激活，然后刷新
         self.yys.wait_game_img('img\\SHUA-XIN.png', max_time=300, quit=True)
         # 点击刷新按钮直到确认刷新出现
@@ -107,6 +109,8 @@ class Breakthrough(Fighter):
             victories = 0
             # 循环突破9次，直到满足成功次数或循环结束
             for i in range(9):
+                if not self.run:
+                    break
                 if victories >= 3:
                     self.log.writeinfo('成功突破:'+str(victories)+'次，等待新的一轮')
                     break
@@ -116,14 +120,14 @@ class Breakthrough(Fighter):
                     sys.exit(0)
                 if result == 1:
                     victories += 1
-                    self.max_victories -= 1
+                    self.max_tasks -= 1
                 self.log.writewarning("当前挑战次数->"+str(i+1)+"，当前成功突破次数->"+str(victories))
 
             # 刷新页面
             self.refresh()
 
-            # 最大突破数小于3就不进行下一轮了
-            if self.max_victories < 3:
+            # 最大任务数小于3就不进行下一轮了
+            if self.max_tasks < 3:
                 self.log.writewarning("任务结束")
                 break
 
