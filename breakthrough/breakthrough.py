@@ -102,6 +102,10 @@ class Breakthrough(Fighter):
 
         # 战斗主循环
         while self.run:
+            # 最大任务数小于3就不进行下一轮了
+            if self.max_tasks < 3:
+                self.log.writewarning("突破任务结束")
+                break
             # 检测是否在结界突破页面
             self.check_breakthrough()
 
@@ -125,12 +129,3 @@ class Breakthrough(Fighter):
 
             # 刷新页面
             self.refresh()
-
-            # 最大任务数小于3就不进行下一轮了
-            if self.max_tasks < 3:
-                self.log.writewarning("任务结束")
-                break
-
-
-
-

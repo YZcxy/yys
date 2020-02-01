@@ -1,16 +1,17 @@
+import configparser
+
+import tools.utilities as ut
 from gameLib.fighter import Fighter
 from tools.game_pos import CommonPos, YuhunPos
-import tools.utilities as ut
-
-import configparser
 
 
 class SingleFight(Fighter):
     '''单人御魂战斗，参数done, emyc'''
 
-    def __init__(self, done=1, emyc=0):
+    def __init__(self, done=1, emyc=0, max_tasks=200, activate=True):
         # 初始化
-        Fighter.__init__(self, '', emyc)
+        Fighter.__init__(self, '', emyc, activate=activate)
+        self.max_tasks = max_tasks
 
         # 读取配置文件
         conf = configparser.ConfigParser()
@@ -24,6 +25,10 @@ class SingleFight(Fighter):
         mood2 = ut.Mood()
         mood3 = ut.Mood(3)
         while self.run:
+            # 最大任务数小于等于0就不进行下一轮了
+            if self.max_tasks <= 0:
+                self.log.writewarning("御魂任务结束")
+                break
             # 在御魂主选单，点击“挑战”按钮, 需要使用“阵容锁定”！
             self.yys.wait_game_img('img\\TIAO-ZHAN.png',
                                    self.max_win_time)
@@ -53,3 +58,4 @@ class SingleFight(Fighter):
             self.click_until('结算', 'img\\TIAO-ZHAN.png',
                              *CommonPos.second_position, mood3.get1mood()/1000)
             self.log.writeinfo("回到御魂选择界面")
+            self.max_tasks -= 1

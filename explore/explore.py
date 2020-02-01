@@ -1,18 +1,19 @@
-from gameLib.fighter import Fighter
-from tools.game_pos import CommonPos, TansuoPos
-from breakthrough.breakthrough import Breakthrough
-import tools.utilities as ut
-
 import configparser
 import logging
 import random
 import time
 
+import tools.utilities as ut
+from breakthrough.breakthrough import Breakthrough
+from gameLib.fighter import Fighter
+from tools.game_pos import CommonPos, TansuoPos
+
 
 class ExploreFight(Fighter):
-    def __init__(self):
+    def __init__(self, max_tasks=200, activate=True):
         # 初始化
-        Fighter.__init__(self)
+        Fighter.__init__(self, activate=activate)
+        self.max_tasks = max_tasks
 
         # 读取配置文件
         conf = configparser.ConfigParser()
@@ -240,6 +241,10 @@ class ExploreFight(Fighter):
         mood1 = ut.Mood(2)
         mood2 = ut.Mood(3)
         while self.run:
+            # 最大任务数小于等于0就不进行下一轮了
+            if self.max_tasks <= 0:
+                self.log.writewarning("探索任务结束")
+                break
             # 进行结界突破分支任务
             self.tupo_branch()
 
@@ -254,6 +259,8 @@ class ExploreFight(Fighter):
                     continue
                 elif result == 2:
                     time.sleep(random.randint(2,3))
+                    # 打完boss就算完成任务一次
+                    self.max_tasks -= 1
                     break
                 else:
                     self.log.writeinfo('移动至下一个场景')

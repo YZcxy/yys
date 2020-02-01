@@ -1,22 +1,22 @@
-from explore.explore import ExploreFight
-from ghost.ghost import Ghost
+import configparser
+import ctypes
+import logging
+import sys
+import threading
+
+from PyQt5.QtGui import QTextCursor
+from PyQt5.QtWidgets import QApplication, QMainWindow
+
+from Ui_onmyoji import Ui_MainWindow
 from breakthrough.breakthrough import Breakthrough
 from breakthrough.shack_breakthrough import ShackBreakthrough
+from explore.explore import ExploreFight
+from ghost.ghost import Ghost
 from mitama.dual import DualFighter
 from mitama.fighter_driver import DriverFighter
 from mitama.fighter_passenger import FighterPassenger
 from mitama.single_fight import SingleFight
-from PyQt5.QtGui import QTextCursor
-from PyQt5.QtWidgets import QApplication, QMainWindow
-from PyQt5.QtCore import QObject, pyqtSignal
-from Ui_onmyoji import Ui_MainWindow
-
-import configparser
-import ctypes
-import logging
-import os
-import sys
-import threading
+from tasks.task import Task
 
 
 def is_admin():
@@ -56,7 +56,7 @@ class MyMainWindow(QMainWindow):
         conf.set('watchdog', 'max_op_time', str(self.ui.lineEdit_2.text()))
 
         # 御魂参数
-        if section == 0:
+        if section == 0 or section == 4:
             # 御魂
             conf.set('mitama', 'mitama_click_partner_left',
                      str(self.ui.mitama_click_partner_left.isChecked()))
@@ -64,7 +64,7 @@ class MyMainWindow(QMainWindow):
                      str(self.ui.mitama_click_partner_right.isChecked()))
 
         # 探索参数
-        if section == 1:
+        if section == 1 or section == 4:
             # 探索
             conf.set('explore', 'fight_boss_enable',
                      str(self.ui.checkBox_2.isChecked()))
@@ -79,8 +79,35 @@ class MyMainWindow(QMainWindow):
 
 
         # 百鬼夜行参数
-        if section == 2:
+        if section == 2 or section == 4:
             pass
+
+        # 结界突破参数
+        if section == 3 or section == 4:
+            pass
+
+        # 专项任务参数
+        if section == 4:
+            conf.set('task', 'tansuo',
+                     str(self.ui.lineEdit_4.text()))
+            conf.set('task', 'yuhun',
+                     str(self.ui.lineEdit_5.text()))
+            conf.set('task', 'juexing',
+                     str(self.ui.lineEdit_6.text()))
+            conf.set('task', 'tupo',
+                     str(self.ui.lineEdit_7.text()))
+
+            # 御魂
+            conf.set('mitama', 'mitama_click_partner_left',
+                     'True')
+            conf.set('mitama', 'mitama_click_partner_right',
+                     'False')
+
+            # 探索
+            conf.set('explore', 'fight_boss_enable',
+                     'True')
+            conf.set('explore', 'tupo_enable',
+                     'False')
     
     def get_conf(self, section):
         conf = configparser.ConfigParser()
@@ -94,6 +121,7 @@ class MyMainWindow(QMainWindow):
             conf.add_section('watchdog')
             conf.add_section('explore')
             conf.add_section('mitama')
+            conf.add_section('task')
             self.set_conf(conf, section)
 
         # 保存配置文件
@@ -141,6 +169,9 @@ class MyMainWindow(QMainWindow):
             elif self.ui.shack.isChecked():
                 # 个人突破
                 self.fight = ShackBreakthrough()
+
+        elif section == 4:
+            self.fight = Task()
 
         task = threading.Thread(target = self.fight.start)
         task.start()
