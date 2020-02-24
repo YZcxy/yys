@@ -58,6 +58,37 @@ class Breakthrough(Fighter):
         self.click_until('确认按钮', 'img\\QUE-REN-SHUA-XIN.png',
                          *BreakthroughPos.confirm_btn, 2, False)
 
+    def fight_and_quit(self, target_pos, mood):
+        # 点击有效位置，直到可以进攻按钮
+        self.click_until('突破目标', 'img\\JIN-GONG.png', *self.valid_position(target_pos),
+                         step_time=mood.get1mood() / 1000, appear=True, point=0.9)
+
+        time.sleep(1)
+
+        # 点击进攻，开始突破
+        self.click_until('进攻', 'img\\JIN-GONG.png', *self.attack_position(target_pos), step_time=mood.get1mood() / 1000,
+                         appear=False, point=0.9)
+
+        # 检测是否进入战斗
+        self.check_battle()
+
+        # 退出战斗
+        self.click_until('退出按钮', 'img\\QUE-REN-TUI-CHU.png', *BreakthroughPos.quit_btn,
+                         step_time=mood.get1mood() / 1000, appear=True, point=0.9)
+        self.click_until('确认退出', 'img\\QUE-REN-TUI-CHU.png', *BreakthroughPos.confirm_quit_btn,
+                         step_time=mood.get1mood() / 1000, appear=False, point=0.9)
+
+        # 检测突破结果
+        result = self.check_result()
+        if result == 0:
+            return False
+
+        # 点击知道结算成功
+        self.click_until('结算', 'img\\JIE-JIE-TU-PO.png', *BreakthroughPos.jiesuan_position, mood.get1mood() / 1000)
+
+        return result
+
+
 
     def fighting(self, target_pos, mood):
         '''
@@ -77,7 +108,7 @@ class Breakthrough(Fighter):
         # 点击有效位置，直到可以进攻按钮
         self.click_until('突破目标', 'img\\JIN-GONG.png', *self.valid_position(target_pos), step_time= mood.get1mood()/1000, appear=True, point=0.9)
 
-        time.sleep(2)
+        time.sleep(1)
 
         # 点击进攻，开始突破
         self.click_until('进攻', 'img\\JIN-GONG.png', *self.attack_position(target_pos), step_time= mood.get1mood()/1000, appear=False, point=0.9)
@@ -111,6 +142,8 @@ class Breakthrough(Fighter):
 
             # 成功突破次数
             victories = 0
+            # 失败突破次数
+            defeated = 0
             # 循环突破9次，直到满足成功次数或循环结束
             for i in range(9):
                 if not self.run:
@@ -118,14 +151,19 @@ class Breakthrough(Fighter):
                 if victories >= 3:
                     self.log.writeinfo('成功突破:'+str(victories)+'次，等待新的一轮')
                     break
-                result = self.fighting(BreakthroughPos.target_position[i], mood)
+                result = self.fighting(BreakthroughPos.target_position[i + 3], mood)
                 if not result:
                     self.log.writewarning("强制退出脚本")
                     sys.exit(0)
                 if result == 1:
                     victories += 1
                     self.max_tasks -= 1
-                self.log.writewarning("当前挑战次数->"+str(i+1)+"，当前成功突破次数->"+str(victories))
+                defeated = i + 1 - victories
+                self.log.writewarning("当前成功突破次数->" + str(victories) + "，当前失败突破次数->" + str(defeated))
+
+            if defeated == 0:
+                # 秒退一次，为了保持当前突破等级
+                self.fight_and_quit(BreakthroughPos.target_position[8], mood)
 
             # 刷新页面
             self.refresh()
