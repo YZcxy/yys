@@ -140,10 +140,11 @@ class Breakthrough(Fighter):
             # 检测是否在结界突破页面
             self.check_breakthrough()
 
+            # 秒退一次，为了保持当前突破等级
+            self.fight_and_quit(BreakthroughPos.target_position[8], mood)
+
             # 成功突破次数
             victories = 0
-            # 失败突破次数
-            defeated = 0
             # 循环突破9次，直到满足成功次数或循环结束
             for i in range(9):
                 if not self.run:
@@ -158,12 +159,7 @@ class Breakthrough(Fighter):
                 if result == 1:
                     victories += 1
                     self.max_tasks -= 1
-                defeated = i + 1 - victories
-                self.log.writewarning("当前成功突破次数->" + str(victories) + "，当前失败突破次数->" + str(defeated))
-
-            if defeated == 0:
-                # 秒退一次，为了保持当前突破等级
-                self.fight_and_quit(BreakthroughPos.target_position[8], mood)
+                self.log.writewarning("当前挑战次数->" + str(i + 1) + "，当前成功突破次数->" + str(victories))
 
             # 刷新页面
             self.refresh()
