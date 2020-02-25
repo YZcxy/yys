@@ -151,7 +151,7 @@ class Breakthrough(Fighter):
                 if victories >= 3:
                     self.log.writeinfo('成功突破:'+str(victories)+'次，等待新的一轮')
                     break
-                result = self.fighting(BreakthroughPos.target_position[i + 3], mood)
+                result = self.fighting(BreakthroughPos.target_position[i], mood)
                 if not result:
                     self.log.writewarning("强制退出脚本")
                     sys.exit(0)
