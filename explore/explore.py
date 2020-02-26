@@ -206,7 +206,7 @@ class ExploreFight(Fighter):
             self.yys.mouse_click_bg(ut.firstposition())
 
             self.click_until('结算', 'img\\YING-BING.png',
-                             *CommonPos.second_position, mood2.get1mood()/1000)
+                             *CommonPos.second_position, mood2.get1mood() / 1000, point=0.9)
 
             # 返回结果
             if boss:
